@@ -57,6 +57,7 @@ private:
     QWidget *createResult();
     SComThread *GetIdleProcess();
     void DeleteThread();
+    void MessageBox(QString _strMsg);
 
     QButtonGroup *m_buttonGroup;
     QPixmap image(E_TYPE _eType);

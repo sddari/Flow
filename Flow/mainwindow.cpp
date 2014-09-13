@@ -126,6 +126,7 @@ QAction *MainWindow::createAction(QString _str,const char *_slot)
 
 void MainWindow::fileNew()
 {
+    if (!m_pTab->isEnabled()) {MessageBox("프로세스가 실행 중에는 수행 할 수 없습니다.");return;}
     static int nNew = 1;
     QString str;
     str.sprintf("New %d",nNew++);
@@ -135,6 +136,7 @@ void MainWindow::fileNew()
 
 void MainWindow::fileOpen()
 {
+    if (!m_pTab->isEnabled()) {MessageBox("프로세스가 실행 중에는 수행 할 수 없습니다.");return;}
     SView *pView = new SView();
     pView->SetFilePath(QFileDialog::getOpenFileName(this,tr("Open File"),"Flow File", tr("File (*.flo)")));
     if (!pView->GetFileName().isEmpty())
@@ -149,6 +151,7 @@ void MainWindow::fileOpen()
 
 void MainWindow::fileSave()
 {
+    if (!m_pTab->isEnabled()) {MessageBox("프로세스가 실행 중에는 수행 할 수 없습니다.");return;}
     SView *pView = (SView*)m_pTab->currentWidget();
     if (pView == 0 ) return;
     if (pView->GetFileName().isEmpty())
@@ -162,6 +165,7 @@ void MainWindow::fileSave()
 
 void MainWindow::fileSaveAs()
 {
+    if (!m_pTab->isEnabled()) {MessageBox("프로세스가 실행 중에는 수행 할 수 없습니다.");return;}
     SView *pView = (SView*)m_pTab->currentWidget();
     if (pView == 0 ) return;
     pView->SetFilePath(QFileDialog::getSaveFileName(this,tr("Save as File"),"Flow File", tr("File (*.flo)")));
@@ -204,7 +208,7 @@ void MainWindow::ComStart()
     }
     m_pTool->hide();
     m_pResult->show();
-    m_pTab->setDisabled(true);
+    m_pTab->setDisabled(true);    
     m_pMenuComStart->setEnabled(false);
     m_pMenuComPause->setEnabled(true);
     m_pMenuComStop->setEnabled(true);
@@ -264,6 +268,15 @@ void MainWindow::helpAbout()
 {
     QMessageBox::about(this,"About","Flow v0.3beta\n컴파일러 Qt 5.3.0 2014-6\n만든이 송 태 식\nE-mail sddari@gmail.com");
 }
+
+void MainWindow::MessageBox(QString _strMsg)
+{
+    QMessageBox msgBox;
+    msgBox.addButton(QMessageBox::Ok);
+    msgBox.setText(_strMsg);
+    msgBox.exec();
+}
+
 
 void MainWindow::createMenu()
 {
