@@ -201,6 +201,12 @@ QString string_ext(QString str)
             else
                 break;
         }
+
+        str.clear();
+        for (int i = vecNumber.size(); i < strList.size(); i++)
+        {
+            str += strList.at(i);
+        }
     }
 
     QChar ch[2] = {';',','};
